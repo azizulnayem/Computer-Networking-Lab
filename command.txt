@@ -1,0 +1,4 @@
+Installing Python: pip install python/py
+Checking current version of python: py --version/ python --version/ py -version
+Install Dns server: pip install dnspython
+Running the file: py dns_resolver.py/ python dns_resolver.py
