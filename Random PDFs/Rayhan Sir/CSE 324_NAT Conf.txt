@@ -1,0 +1,111 @@
+NAT Configuration
+==================
+Prerequisite
+------------
+1. LAN Routing
+	- Dynamic Routing (i.e. RIP)
+	- Default Routing to ISP
+	- Default Routing using Dynamic Routing
+2. WAN Routing
+	- Static Routing to LAN Network using Public IP
+
+==========================================================
+**NAT
+=====
+- Static NAT
+- Dunamic NAT
+	- Create a user List to access internet
+	- Create a public IP address pool
+	- List---->Pool IP Address----> To Internet 
+=========================================================
+=========================================================
+====================Prerequisite=========================
+1. LAN Routing
+
+- Dynamic Routing (i.e. RIP)
+-----------------------------
+R1(config)#router rip 
+R1(config-router)#net 192.168.12.0
+R1(config-router)#net 192.168.220.0
+R1(config-router)#net 192.168.221.0
+R1(config-router)#exit
+
+R2(config)#router rip 
+R2(config-router)#net 192.168.10.0
+R2(config-router)#net 192.168.220.0
+R2(config-router)#net 192.168.222.0
+R2(config-router)#exit
+
+R3(config)#router rip
+R3(config-router)#net 192.168.11.0
+R3(config-router)#net 192.168.222.0
+R3(config-router)#net 192.168.221.0
+R3(config-router)#exit
+
+- Default Routing to ISP
+-------------------------
+R1(config)#ip route 0.0.0.0 0.0.0.0 200.165.200.193
+
+- Default Routing using Dynamic Routing
+----------------------------------------
+R1(config)#router rip 
+R1(config-router)#default-information originate 
+R1(config-router)#exit
+=========================================================
+2. WAN Routing
+- Static Routing to LAN Network using Public IP
+-----------------------------------------------
+
+ISP(config)#ip route 209.165.200.240 255.255.255.248 200.165.200.194
+
+=======================================================================
+=======================================================================
+====================NAT================================================
+- Static NAT
+------------
+
+R1(config)#ip nat inside source static 192.168.12.12 209.165.200.241
+R1(config)#ip nat inside source static 192.168.11.11 209.165.200.242
+
+
+- Dynamic NAT
+-------------
+
+R1(config)#access-list 1 permit 192.168.10.0 0.0.0.255
+R1(config)#access-list 1 permit 192.168.11.0 0.0.0.255
+R1(config)#access-list 1 permit 192.168.12.0 0.0.0.255
+
+R1(config)#ip nat pool NAT-POOL 209.165.200.243 209.165.200.245 netmask 255.255.255.248
+
+R1(config)#ip nat inside source list 1 pool NAT-POOL
+
+
+Apply NAT
+=========
+R1(config)#int serial 0/1/1
+R1(config-if)#ip nat outside 
+R1(config-if)#exit
+
+R1(config)#int serial 0/0/0
+R1(config-if)#ip nat inside 
+R1(config-if)#exit
+
+R1(config)#int serial 0/0/1
+R1(config-if)#ip nat inside 
+R1(config-if)#exit
+
+R1(config)#int gig0/0
+R1(config-if)#ip nat inside 
+R1(config-if)#exit
+============================================================
+============================================================
+
+
+
+
+
+
+
+
+
+

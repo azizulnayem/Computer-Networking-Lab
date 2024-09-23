@@ -1,0 +1,9 @@
+config-if-> ip address 192.168.5.10 255.255.255.0
+cofig- > ip dhcp pool net1
+dhcp config-> net 192.168.5.0 255.255.255.0
+-> default 193.168.5.10
+exit
+
+
+----
+ip route __network __subnet __nextHop

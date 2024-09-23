@@ -1,0 +1,90 @@
+=================================================================
+===================ACL Simple Question and Answer================
+=================================================================
+
+Q1. Prevent (Deny) LAB#7 Network to Access Datacenter Network.
+-------------------------------------------------------------
+R1(config)#access-list 1 deny 192.168.3.0 0.0.0.255
+R1(config)#access-list 1 permit any 
+
+R1(config)#int gigabitEthernet 0/0
+R1(config-if)#ip access-group 1 out 
+R1(config-if)#exit
+
+---------------------------------------------------------
+Q2. Prevent (Deny) LAB#7 PC01 to Access Datacenter Network.
+----------------------------------------------------------
+R1(config)#access-list 2 deny host 192.168.3.10
+R1(config)#access-list 2 permit any 
+
+R1(config)#int gigabitEthernet 0/0
+R1(config-if)#ip access-group 2 out 
+R1(config-if)#exit
+
+------------------------------------------------------------
+Q3. LAB#6 network is not allowed to access Office Server using http/https/browsing,
+	but All other Traffic is Permitted for Lab#6 Network.
+--------------------------------------------------------------
+R2(config)#access-list 100 deny tcp 192.168.4.0 0.0.0.255 host 192.168.1.11 eq www
+R2(config)#access-list 100 permit ip any any 
+
+R2(config)#int gigabitEthernet 0/1
+R2(config-if)#ip access-group 100 in 
+R2(config-if)#exit
+
+--------------------------------------------------------------
+Q4. Office Server will be allowed to access only by Office Network, but all other networks will be
+	denied. All networks will be allowed to access any other Datacenter Servers.
+-------------------------------------------------------------
+R1(config)#access-list 101 permit ip 192.168.2.0 0.0.0.255 host 192.168.1.11
+R1(config)#access-list 101 deny ip any host 192.168.1.11
+R1(config)#access-list 101 permit ip any any 
+
+R1(config)#int gigabitEthernet 0/0
+R1(config-if)#ip access-group 101 out 
+R1(config-if)#exit
+
+----------------------------------------------------------------------------
+Q5. LAB-7 PC01 can not ping File server but only acccess by http, 
+	All other Traffic is Permitted for Data Center Network
+------------------------------------------------------------------------------
+Answer-01:  (in Router R1)
+==========================
+R1(config)#access-list 102 deny icmp host 192.168.3.10 host 192.168.1.14 echo-reply 
+R1(config)#access-list 102 permit tcp host 192.168.3.10 host 192.168.1.14 eq www 
+R1(config)#access-list 102 deny ip host 192.168.3.10 host 192.168.1.14
+R1(config)#access-list 102 permit ip any any 
+
+R1(config)#int gigabitEthernet 0/0
+R1(config-if)#ip access-group 102 out 
+R1(config-if)#
+
+Answer-02:  (in Router R3)
+==========================
+R1(config)#access-list 103 deny icmp host 192.168.3.10 host 192.168.1.14 echo-reply 
+R1(config)#access-list 103 permit tcp host 192.168.3.10 host 192.168.1.14 eq www 
+R1(config)#access-list 103 deny ip host 192.168.3.10 host 192.168.1.14
+R1(config)#access-list 103 permit ip any any 
+
+R1(config)#int gigabitEthernet 0/0
+R1(config-if)#ip access-group 103 in 
+R1(config-if)#
+
+-------------------------------------------------------
+Q6. Prevent all Private IP Address to Access Internet  (Please follw the order)
+-------------------------------------------------------
+ISP(config)#access-list 10 deny 10.0.0.0 0.255.255.255
+ISP(config)#access-list 10 deny 172.16.0.0 0.15.255.255
+ISP(config)#access-list 10 deny 192.168.0.0 0.0.255.255
+ISP(config)#access-list 10 permit any 
+
+ISP(config)#int serial 0/0/0
+ISP(config-if)#ip access-group 10 in 
+ISP(config-if)#exit
+=====================================================================
+=====================================================================
+=====================================================================
+
+
+
+

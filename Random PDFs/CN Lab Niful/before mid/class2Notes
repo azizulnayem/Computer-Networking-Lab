@@ -1,0 +1,27 @@
+			ip addreasing and subnetting
+class A -> first bit 0 in first octat	
+	range 1-127. network bit 1 octate
+class B -> second bit 0. first bit 1
+	range 128 -191 . network bit 2 ocatate
+class C -> third bit 0 , first and second bit 0
+	range 192 - 223 . network bit 3 octate
+	
+broadcast -> network same, host 255 ie. (all 1)
+network address -> same network , hosts are 0.	
+
+address 60.41.211.5
+address class A
+default subnet mask : 255.0.0.0
+default network : 60.0.0.0
+class host bit : 60
+class host bits: 8
+total no of usable host 2^24 -2
+default broadcast : 60.255.255.255
+
+
+
+
+
+
+	
+	

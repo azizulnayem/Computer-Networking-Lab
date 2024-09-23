@@ -1,0 +1,8 @@
+do show valn bri
+vlan _10
+name _lan-49
+interface range[for range opt for one] fastEthernet 0/1-10
+switchport mode access
+switchport access valn _10
+int gigabitEth0/1
+switchport mode trunk

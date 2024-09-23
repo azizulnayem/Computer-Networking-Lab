@@ -1,0 +1,16 @@
+deny pc
+config-t-> access-list 1-99 deny host _ip
+or -> access-list [1-99] deny _ip _wildCard[0.0.0.0]
+then->
+access-list [1-99] permit any
+interface -> ip access-group [1-99] out
+deny ---> no ip access-list [1-99]
+config-if-> no ip access-group[1-99] out
+show run
+
+extended
+
+access-list [100-199]  deny _service _hostIp  _host_wild _destIp _destWild
+access-list [100-199] permit _service any any
+config- if --> ip access-group [100-199] in
+

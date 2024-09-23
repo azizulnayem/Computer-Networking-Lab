@@ -1,0 +1,9 @@
+=================================================================
+===================ACL Simple Question and Answer================
+=================================================================
+
+Q1. Prevent (Deny) LAB#7 Network to Access Datacenter Network.
+
+Q2. Prevent (Deny) LAB#7 PC01 to Access Datacenter Network.
+
+Q3. Prevent all Private IP Address from accessing Internet.
